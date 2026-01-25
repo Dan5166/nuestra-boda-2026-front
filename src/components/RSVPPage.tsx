@@ -3,6 +3,8 @@ import { useSearchParams } from "react-router-dom";
 import FondoDesktop from "../assets/fondo-desktop.png";
 import FondoMovil from "../assets/fondo-movil.png";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 /* =========================
    TIPOS
 ========================= */
@@ -60,7 +62,7 @@ export default function RSVPPage() {
     setLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:3000/users/by-code/${codigoABuscar}`,
+        `${API_URL}/users/by-code/${codigoABuscar}`,
       );
       if (!res.ok) throw new Error();
 
@@ -139,7 +141,7 @@ export default function RSVPPage() {
         };
 
         const res = await fetch(
-          `http://localhost:3000/users/${inv.userId}/rsvp`,
+          `${API_URL}/users/${inv.userId}/rsvp`,
           {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
