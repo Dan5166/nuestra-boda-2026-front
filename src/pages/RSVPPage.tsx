@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import FondoDesktop from "../assets/fondo-desktop.png";
 import FondoMovil from "../assets/fondo-movil.png";
 import Loader from "../components/Loader";
+import { useNavigate } from "react-router-dom";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -15,8 +16,7 @@ export const EstadoUsuario = {
   CONFIRMADO: "confirmado",
   RECHAZADO: "rechazado",
 } as const;
-export type EstadoUsuario =
-  (typeof EstadoUsuario)[keyof typeof EstadoUsuario];
+export type EstadoUsuario = (typeof EstadoUsuario)[keyof typeof EstadoUsuario];
 
 export const AlergiaAlimentaria = {
   NINGUNA: "ninguna",
@@ -55,6 +55,7 @@ export default function RSVPPage() {
     type: "",
     msg: "",
   });
+  const navigate = useNavigate();
 
   /* =========================
      BUSCAR CÓDIGO
@@ -64,9 +65,7 @@ export default function RSVPPage() {
     setLoadingCode(true);
     setLoading(true);
     try {
-      const res = await fetch(
-        `${API_URL}/users/by-code/${codigoABuscar}`,
-      );
+      const res = await fetch(`${API_URL}/users/by-code/${codigoABuscar}`);
       if (!res.ok) throw new Error();
 
       const data = await res.json();
@@ -91,7 +90,7 @@ export default function RSVPPage() {
       });
     } finally {
       setLoading(false);
-      setLoadingCode(false)
+      setLoadingCode(false);
     }
   };
 
@@ -103,11 +102,7 @@ export default function RSVPPage() {
      HELPERS
   ========================= */
 
-  const updateInvitado = (
-    index: number,
-    field: keyof Invitado,
-    value: any,
-  ) => {
+  const updateInvitado = (index: number, field: keyof Invitado, value: any) => {
     const copia = [...invitados];
     copia[index] = { ...copia[index], [field]: value };
     setInvitados(copia);
@@ -144,14 +139,11 @@ export default function RSVPPage() {
           mensaje: inv.mensaje || undefined,
         };
 
-        const res = await fetch(
-          `${API_URL}/users/${inv.userId}/rsvp`,
-          {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body),
-          },
-        );
+        const res = await fetch(`${API_URL}/users/${inv.userId}/rsvp`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
 
         if (!res.ok) throw new Error("Error guardando RSVP");
       }
@@ -160,6 +152,11 @@ export default function RSVPPage() {
         type: "success",
         msg: "¡Gracias! Tu respuesta fue registrada correctamente 💛",
       });
+
+      // 👉 Redirige al home luego de 2.5 segundos
+      setTimeout(() => {
+        navigate("/");
+      }, 2500);
     } catch {
       setStatusMsg({
         type: "error",
@@ -176,7 +173,7 @@ export default function RSVPPage() {
 
   const invitado = invitados[activeIndex];
 
-  if (loadingCode) return <Loader/>
+  if (loadingCode) return <Loader />;
 
   return (
     <div
@@ -288,26 +285,34 @@ export default function RSVPPage() {
               />
             </div>
 
-            <button
-              disabled={!todosRespondieron || loading}
-              onClick={enviarRSVP}
-              className="w-full mt-6 py-3 bg-[#8a6d3b] text-white font-bold disabled:opacity-50"
-            >
-              {loading ? "Enviando..." : "Confirmar Invitación"}
-            </button>
+            {statusMsg.type !== "success" && (
+              <button
+                disabled={!todosRespondieron || loading}
+                onClick={enviarRSVP}
+                className="w-full mt-6 py-3 bg-[#8a6d3b] text-white font-bold disabled:opacity-50"
+              >
+                {loading ? "Enviando..." : "Confirmar Invitación"}
+              </button>
+            )}
           </>
         )}
 
         {statusMsg.msg && (
-          <p
-            className={`text-center mt-4 ${
+          <div
+            className={`mt-6 rounded-lg border p-4 text-center ${
               statusMsg.type === "error"
-                ? "text-red-600"
-                : "text-green-600"
+                ? "border-red-300 bg-red-50 text-red-700"
+                : "border-green-300 bg-green-50 text-green-700"
             }`}
           >
-            {statusMsg.msg}
-          </p>
+            <p className="font-semibold">{statusMsg.msg}</p>
+
+            {statusMsg.type === "success" && (
+              <p className="mt-2 text-sm text-green-600">
+                Serás redirigido automáticamente al inicio…
+              </p>
+            )}
+          </div>
         )}
       </div>
     </div>
