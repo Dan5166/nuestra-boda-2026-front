@@ -188,7 +188,9 @@ export default function RSVPPage() {
         style={{ backgroundImage: `url(${FondoMovil})` }}
       />
 
-      <div className="relative z-10 w-full max-w-xl bg-white/95 p-6">
+
+      <div className="relative z-10 w-full max-w-xl bg-white/95 p-6 border-8 [border-image:linear-gradient(to_right,#bf953f,#fcf6ba,#b38728)1]">
+
         {step === "codigo" && (
           <div className="relative z-10 w-full max-w-xl bg-white/95">
               <h2 className="text-xl font-bold mb-4">Ingresa tu código</h2>
