@@ -188,17 +188,9 @@ export default function RSVPPage() {
         style={{ backgroundImage: `url(${FondoMovil})` }}
       />
 
-      <div className="relative z-10 w-full max-w-xl bg-white/95 p-6">
+      <div className="relative z-10 w-full max-w-xl bg-white/95">
         {step === "codigo" && (
-          <div
-            className="min-h-screen flex items-center justify-center p-4 bg-cover bg-center"
-            style={{ backgroundImage: `url(${FondoDesktop})` }}
-          >
-            <div
-              className="fixed inset-0 bg-cover bg-center md:hidden"
-              style={{ backgroundImage: `url(${FondoMovil})` }}
-            />
-            <div className="relative z-10 w-full max-w-xl bg-white/95 p-6">
+          <div className="relative z-10 w-full max-w-xl bg-white/95 p-6">
               <h2 className="text-xl font-bold mb-4">Ingresa tu código</h2>
               <input
                 placeholder="Código"
@@ -226,7 +218,6 @@ export default function RSVPPage() {
                 </div>
               )}
             </div>
-          </div>
         )}
         {step === "formulario" && invitado && (
           <>
@@ -339,7 +330,7 @@ export default function RSVPPage() {
           </>
         )}
 
-        {statusMsg.msg && (
+        {step === "formulario" && statusMsg.msg && (
           <div
             className={`mt-6 rounded-lg border p-4 text-center ${
               statusMsg.type === "error"
