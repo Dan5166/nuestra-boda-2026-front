@@ -4,7 +4,7 @@ import FondoMovil from "../assets/fondo-movil.png";
 export default function Loader() {
   return (
     <div
-      className="flex items-center justify-center h-screen"
+      className="min-h-screen flex items-center justify-center p-4 bg-cover bg-center"
       style={{ backgroundImage: `url(${FondoDesktop})` }}
     >
       <div
