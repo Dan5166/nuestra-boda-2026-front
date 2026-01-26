@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import FondoDesktop from "../assets/fondo-desktop.png";
 import FondoMovil from "../assets/fondo-movil.png";
+import Loader from "../components/Loader";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -48,6 +49,7 @@ export default function RSVPPage() {
   const [step, setStep] = useState<"codigo" | "formulario">("codigo");
   const [invitados, setInvitados] = useState<Invitado[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [loadingCode, setLoadingCode] = useState(false);
   const [loading, setLoading] = useState(false);
   const [statusMsg, setStatusMsg] = useState<{ type: string; msg: string }>({
     type: "",
@@ -59,6 +61,7 @@ export default function RSVPPage() {
   ========================= */
 
   const buscarCodigo = async (codigoABuscar: string) => {
+    setLoadingCode(true);
     setLoading(true);
     try {
       const res = await fetch(
@@ -88,6 +91,7 @@ export default function RSVPPage() {
       });
     } finally {
       setLoading(false);
+      setLoadingCode(false)
     }
   };
 
@@ -171,6 +175,8 @@ export default function RSVPPage() {
   ========================= */
 
   const invitado = invitados[activeIndex];
+
+  if (loadingCode) return <Loader/>
 
   return (
     <div
