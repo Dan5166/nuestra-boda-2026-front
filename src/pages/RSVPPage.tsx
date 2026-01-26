@@ -46,7 +46,10 @@ export default function RSVPPage() {
   const [searchParams] = useSearchParams();
   const codeFromUrl = searchParams.get("code")?.toUpperCase() || "";
 
-  const [step, setStep] = useState<"codigo" | "formulario">("codigo");
+  const [step, setStep] = useState<"codigo" | "formulario">(
+    codeFromUrl ? "formulario" : "codigo",
+  );
+  const [codigoInput, setCodigoInput] = useState(codeFromUrl);
   const [invitados, setInvitados] = useState<Invitado[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [loadingCode, setLoadingCode] = useState(false);
@@ -96,7 +99,7 @@ export default function RSVPPage() {
 
   useEffect(() => {
     if (codeFromUrl) buscarCodigo(codeFromUrl);
-  }, [codeFromUrl]);
+  }, []);
 
   /* =========================
      HELPERS
@@ -186,6 +189,45 @@ export default function RSVPPage() {
       />
 
       <div className="relative z-10 w-full max-w-xl bg-white/95 p-6">
+        {step === "codigo" && (
+          <div
+            className="min-h-screen flex items-center justify-center p-4 bg-cover bg-center"
+            style={{ backgroundImage: `url(${FondoDesktop})` }}
+          >
+            <div
+              className="fixed inset-0 bg-cover bg-center md:hidden"
+              style={{ backgroundImage: `url(${FondoMovil})` }}
+            />
+            <div className="relative z-10 w-full max-w-xl bg-white/95 p-6">
+              <h2 className="text-xl font-bold mb-4">Ingresa tu código</h2>
+              <input
+                placeholder="Código"
+                className="w-full border p-2 mb-4"
+                value={codigoInput}
+                onChange={(e) => setCodigoInput(e.target.value.toUpperCase())}
+              />
+              <button
+                onClick={() => buscarCodigo(codigoInput)}
+                disabled={!codigoInput || loading}
+                className="w-full py-3 bg-[#8a6d3b] text-white font-bold disabled:opacity-50"
+              >
+                {loading ? "Buscando..." : "Continuar"}
+              </button>
+
+              {statusMsg.msg && (
+                <div
+                  className={`mt-4 rounded-lg border p-4 text-center ${
+                    statusMsg.type === "error"
+                      ? "border-red-300 bg-red-50 text-red-700"
+                      : "border-green-300 bg-green-50 text-green-700"
+                  }`}
+                >
+                  {statusMsg.msg}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
         {step === "formulario" && invitado && (
           <>
             {/* Tabs */}
