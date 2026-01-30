@@ -5,6 +5,7 @@ import G2 from "../assets/fondo-desktop.png";
 import G3 from "../assets/fondo-desktop.png";
 import G4 from "../assets/fondo-desktop.png";
 import { Link } from "react-router-dom";
+import WeddingCountdown from '../components/WeddingCountdown'
 
 export default function Home() {
   return (
@@ -32,9 +33,12 @@ export default function Home() {
             </h1>
 
             <p className="text-white mb-10 text-lg lg:text-base tracking-widest">
-              26 · Abril · 2026
+              19 · Abril · 2026
             </p>
           </div>
+
+        <WeddingCountdown/>
+
           <Link
               to="/rsvp"
               className="inline-block px-10 py-4 bg-linear-to-r from-[#bf953f] via-[#d4af37] to-[#aa771c] text-white font-bold uppercase tracking-[0.25em] text-xs rounded-full shadow-xl hover:brightness-110 transition"
