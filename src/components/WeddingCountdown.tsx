@@ -2,9 +2,17 @@ import { useEffect, useState } from "react";
 
 const WEDDING_DATE = new Date("2026-04-19T12:30:00");
 
-function getTimeLeft() {
+interface TimeLeft {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  finished: boolean;
+}
+
+function getTimeLeft(): TimeLeft {
   const now = new Date();
-  const diff = WEDDING_DATE - now;
+  const diff = WEDDING_DATE.getTime() - now.getTime();
 
   if (diff <= 0) {
     return {
@@ -26,7 +34,7 @@ function getTimeLeft() {
 }
 
 export default function WeddingCountdown() {
-  const [timeLeft, setTimeLeft] = useState(getTimeLeft());
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>(getTimeLeft());
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -46,7 +54,6 @@ export default function WeddingCountdown() {
 
   return (
     <div className="flex flex-col items-center gap-6 p-6">
-
       <div className="flex gap-4">
         <TimeBox label="Días" value={timeLeft.days} />
         <TimeBox label="Horas" value={timeLeft.hours} />
@@ -57,7 +64,12 @@ export default function WeddingCountdown() {
   );
 }
 
-function TimeBox({ label, value }) {
+interface TimeBoxProps {
+  label: string;
+  value: number;
+}
+
+function TimeBox({ label, value }: TimeBoxProps) {
   return (
     <div className="w-24 h-24 bg-gray-100 backdrop-blur rounded-2xl shadow-md flex flex-col items-center justify-center">
       <span className="text-3xl font-bold text-[#d4af37]">
