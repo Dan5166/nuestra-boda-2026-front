@@ -1,50 +1,88 @@
 import HeroDesktop from "../assets/fondo-desktop.png";
 import HeroMovil from "../assets/fondo-movil.png";
-import G1 from "../assets/fondo-desktop.png";
-import G2 from "../assets/fondo-desktop.png";
-import G3 from "../assets/fondo-desktop.png";
-import G4 from "../assets/fondo-desktop.png";
+import NH1 from "../assets/foto-pichilemnu-iglesia.jpeg";
+import NH2 from "../assets/foto-anillos.jpeg";
+import NH3 from "../assets/pelotini.jpeg";
+
+import V1 from "../assets/1-261.jpg";
+import V2 from "../assets/1-246.jpg";
+import V3 from "../assets/1-196.jpg";
+import V4 from "../assets/1-155.jpg";
+import V5 from "../assets/1-61.jpg";
+import V6 from "../assets/1-98.jpg";
+import V7 from "../assets/1-44.jpg";
+import V8 from "../assets/1-68.jpg";
+import V9 from "../assets/1-51.jpg";
+import V10 from "../assets/1-74.jpg";
+import V11 from "../assets/1-14.jpg";
+import V12 from "../assets/1-22.jpg";
+import V13 from "../assets/1-133.jpg";
+import V14 from "../assets/1-145.jpg";
+import V15 from "../assets/1-153.jpg";
+
 import { Link } from "react-router-dom";
-import WeddingCountdown from '../components/WeddingCountdown'
+import WeddingCountdown from "../components/WeddingCountdown";
+
+const images = [
+  V1,
+  V2,
+  V3,
+  V4,
+  V5,
+  V6,
+  V7,
+  V8,
+  V9,
+  V10,
+  V11,
+  V12,
+  V13,
+  V14,
+  V15,
+];
 
 export default function Home() {
   return (
     <div className="relative min-h-screen text-[#5c4a2e]">
       {/* ===== HERO ===== */}
       <section
-        className="relative min-h-screen flex items-center justify-center bg-cover bg-center"
-        style={{ backgroundImage: `url(${HeroDesktop})` }}
+        className="
+    relative min-h-[100svh] md:min-h-screen
+    flex items-center justify-center
+    bg-cover bg-center
+  "
+        style={{
+          backgroundImage: `url(${HeroMovil})`,
+        }}
       >
         <div
-          className="absolute inset-0 bg-cover bg-center md:hidden"
-          style={{ backgroundImage: `url(${HeroMovil})` }}
+          className="absolute inset-0 hidden md:block bg-cover bg-center"
+          style={{ backgroundImage: `url(${HeroDesktop})` }}
         />
 
-        <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute inset-0 bg-black/30" />
 
-        <div className="relative z-10 text-center px-6 ">
-          <div className="drop-shadow-[0_4px_10px_rgba(0,0,0,0.70)]">
-            <p className="uppercase tracking-[0.4em] text-lg text-white mb-4">
-              Nos casamos
-            </p>
+        <div className="relative z-10 text-center px-6">
+          <p className="uppercase tracking-[0.35em] text-sm md:text-lg text-white mb-4">
+            Nos casamos
+          </p>
 
-            <h1 className="font-serif text-5xl md:text-7xl text-white mb-6">
-              Dominic <span className="italic">&</span> Danyael
-            </h1>
+          <h1 className="font-serif text-4xl md:text-7xl text-white mb-6">
+            Dominic <span className="italic">&</span> Danyael
+          </h1>
 
-            <p className="text-white mb-10 text-lg lg:text-base tracking-widest">
-              19 · Abril · 2026
-            </p>
-          </div>
+          <p className="text-white mb-10 text-sm md:text-lg tracking-widest">
+            19 · Abril · 2026
+          </p>
 
-        <WeddingCountdown/>
+          <WeddingCountdown />
 
           <Link
-              to="/rsvp"
-              className="inline-block px-10 py-4 bg-linear-to-r from-[#bf953f] via-[#d4af37] to-[#aa771c] text-white font-bold uppercase tracking-[0.25em] text-xs rounded-full shadow-xl hover:brightness-110 transition"
-            >
-              Confirmar asistencia
-            </Link>
+            to="/rsvp"
+            className="inline-block px-10 py-4 bg-linear-to-r from-[#bf953f] via-[#d4af37] to-[#aa771c] text-white font-bold uppercase tracking-[0.25em] text-xs rounded-full shadow-xl"
+          >
+            Confirmar asistencia
+          </Link>
         </div>
       </section>
 
@@ -60,37 +98,69 @@ export default function Home() {
         <div>
           <h2 className="font-serif text-4xl mb-6">Nuestra historia</h2>
           <p className="text-sm leading-relaxed text-gray-700">
-            Todo comenzó con una conversación simple que cambió nuestras vidas
-            para siempre. Desde ese día, aprendimos que el amor se construye con
-            paciencia, risas y complicidad.
+            Nuestra historia comenzó bajo la guía de Dios, quien unió nuestros
+            caminos en el momento perfecto. Desde entonces, hemos aprendido que
+            el amor verdadero se construye con fe, paciencia, perdón y oración.
             <br />
             <br />
-            Hoy queremos celebrar este paso rodeados de las personas que más
-            queremos 💛
+            Creemos que este paso no es solo una promesa entre nosotros, sino un
+            pacto delante del Señor, confiando en que Él será siempre el centro
+            y fundamento de nuestra vida juntos.
+            <br />
+            <br />
+            Hoy queremos celebrar este regalo que Dios nos ha dado, rodeados de
+            quienes han sido parte de nuestro caminar y han orado por nosotros
+            🤍
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <img src={G1} className="rounded-2xl shadow-lg object-cover h-48" />
+        <div className="grid grid-cols-3 grid-rows-2 gap-4">
+          {/* Imagen protagonista */}
           <img
-            src={G2}
-            className="rounded-2xl shadow-lg object-cover h-48 mt-10"
+            src={NH1}
+            className="col-span-2 row-span-2 rounded-2xl shadow-lg object-cover w-full h-full"
+          />
+
+          {/* Imágenes secundarias */}
+          <img
+            src={NH2}
+            className="rounded-2xl shadow-lg object-cover w-full h-full"
+          />
+
+          <img
+            src={NH3}
+            className="rounded-2xl shadow-lg object-cover w-full h-full"
           />
         </div>
       </section>
 
       {/* ===== GALERÍA ===== */}
       <section className="py-24 bg-[#fdfaf6] px-6">
-        <h2 className="font-serif text-4xl text-center mb-12">Momentos</h2>
+        <h2 className="font-serif text-4xl text-center mb-12">Nosotros</h2>
 
-        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
-          {[G1, G2, G3, G4].map((img, i) => (
-            <img
-              key={i}
-              src={img}
-              className="rounded-2xl shadow-md hover:scale-105 transition-transform duration-300 object-cover h-56"
-            />
-          ))}
+        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] gap-6">
+          {images.map((img, i) => {
+            const bentoClass =
+              i === 0
+                ? "col-span-2 row-span-2"
+                : i === 2
+                  ? ""
+                  : i === images.length - 1
+                    ? ""
+                    : i === 3
+                      ? "col-span-2"
+                      : i % 2 === 0
+                        ? "row-span-2"
+                        : "";
+
+            return (
+              <img
+                key={i}
+                src={img}
+                className={`${bentoClass} rounded-2xl shadow-md hover:scale-105 transition-transform duration-300 object-cover w-full h-full`}
+              />
+            );
+          })}
         </div>
       </section>
 
