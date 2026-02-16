@@ -1,18 +1,67 @@
 import { Link, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import InvitationImage from "../assets/invitacion_compressed_page-0001.jpg";
+
+const API_URL = import.meta.env.VITE_API_URL;
+
+interface Invitado {
+  nombre: string;
+}
 
 export default function Invitation() {
   const [searchParams] = useSearchParams();
   const code = searchParams.get("code");
 
-  console.log("Código de invitación:", code);
+  const [invitados, setInvitados] = useState<Invitado[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  /* =========================
+     BUSCAR INVITADOS POR CODE
+  ========================= */
+
+  useEffect(() => {
+    if (!code) return;
+
+    const fetchInvitados = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(`${API_URL}/users/by-code/${code}`);
+        if (!res.ok) throw new Error();
+
+        const data = await res.json();
+
+        const invitadosMap = data.usuarios.map((u: any) => ({
+          nombre: u.nombre,
+        }));
+
+        setInvitados(invitadosMap);
+      } catch {
+        setInvitados([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInvitados();
+  }, [code]);
+
+  /* =========================
+     TEXTO DINÁMICO
+  ========================= */
+
+  const nombresInvitados =
+    invitados.length > 0
+      ? invitados.map((i) => i.nombre).join(" & ")
+      : "Te queremos en nuestra boda";
+
   return (
     <div className="min-h-screen bg-[#fdfaf6] text-[#5c4a2e]">
-      {/* ===== HEADER SIMPLE ===== */}
-      <header className="py-10 text-center">
+      {/* ===== HEADER ===== */}
+      <header className="py-10 text-center px-4">
         <h1 className="font-serif text-3xl md:text-4xl mb-2">
-          Nuestra Invitación
+          {loading ? "Cargando invitación..." : nombresInvitados}
         </h1>
+
         <p className="text-sm tracking-widest uppercase text-gray-500">
           Dominic & Danyael
         </p>
@@ -36,7 +85,7 @@ export default function Invitation() {
         </p>
 
         <Link
-          to={`/rsvp${code ? `?code=${code}` : ""}`} // Redirige a /rsvp o /rsvp/:code si el código existe
+          to={`/rsvp${code ? `?code=${code}` : ""}`}
           className="
             inline-block
             px-12 py-4
