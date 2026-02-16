@@ -89,8 +89,9 @@ export default function Home() {
       {/* ===== FRASE ===== */}
       <section className="py-24 bg-[#fdfaf6] text-center px-6">
         <p className="font-serif text-2xl md:text-3xl italic max-w-3xl mx-auto">
-          “El amor no se mira, se siente. Y aún más cuando estamos juntos.”
+          “Y nosotros hemos conocido y creído el amor que Dios tiene para con nosotros. Dios es amor; y el que permanece en amor, permanece en Dios, y Dios en él.”
         </p>
+        <p className="text-lg mt-6 opacity-90">1 Juan 4:16</p>
       </section>
 
       {/* ===== NUESTRA HISTORIA ===== */}
