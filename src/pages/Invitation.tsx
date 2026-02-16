@@ -44,7 +44,7 @@ export default function Invitation() {
       setStep("invitacion");
 
       // 👉 Actualiza la URL sin recargar
-      navigate(`/invitacion?code=${codigo}`, { replace: true });
+      navigate(`/invitation?code=${codigo}`, { replace: true });
     } catch {
       setErrorMsg("El código ingresado no es válido.");
     } finally {
