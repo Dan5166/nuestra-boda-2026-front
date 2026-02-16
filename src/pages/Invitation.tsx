@@ -1,6 +1,7 @@
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import InvitationImage from "../assets/invitacion_compressed_page-0001.jpg";
+import BotonesRegaloYTransferencia from "../components/BotonesRegaloYTransferencia";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -14,7 +15,7 @@ export default function Invitation() {
   const codeFromUrl = searchParams.get("code")?.toUpperCase() || "";
 
   const [step, setStep] = useState<"codigo" | "invitacion">(
-    codeFromUrl ? "invitacion" : "codigo"
+    codeFromUrl ? "invitacion" : "codigo",
   );
 
   const [codigoInput, setCodigoInput] = useState(codeFromUrl);
@@ -80,9 +81,7 @@ export default function Invitation() {
       ========================= */}
       {step === "codigo" && (
         <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl text-center">
-          <h1 className="font-serif text-3xl mb-6">
-            Invitación de matrimonio
-          </h1>
+          <h1 className="font-serif text-3xl mb-6">Invitación de matrimonio</h1>
 
           <p className="text-sm text-gray-600 mb-6">
             Ingresa el código que recibiste para ver tu invitación
@@ -133,6 +132,11 @@ export default function Invitation() {
                 alt="Invitación de matrimonio"
                 className="w-full object-contain"
               />
+            </div>
+
+            {/* ===== BOTONES REGALO / TRANSFERENCIA ===== */}
+            <div className="mt-10">
+              <BotonesRegaloYTransferencia />
             </div>
           </main>
 
