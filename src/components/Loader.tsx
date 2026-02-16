@@ -1,5 +1,5 @@
-import FondoDesktop from "../assets/fondo-desktop.png";
-import FondoMovil from "../assets/fondo-movil.png";
+import FondoDesktop from "../assets/fondo-desktop.webp";
+import FondoMovil from "../assets/fondo-movil.webp";
 
 export default function Loader() {
   return (

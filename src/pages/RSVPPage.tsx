@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import FondoDesktop from "../assets/fondo-desktop.png";
-import FondoMovil from "../assets/fondo-movil.png";
+import FondoDesktop from "../assets/fondo-desktop.webp";
+import FondoMovil from "../assets/fondo-movil.webp";
 import Loader from "../components/Loader";
 import { useNavigate } from "react-router-dom";
 
