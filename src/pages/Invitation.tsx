@@ -62,9 +62,11 @@ export default function Invitation() {
           {loading ? "Cargando invitación..." : nombresInvitados}
         </h1>
 
-        <p className="text-sm tracking-widest uppercase text-gray-500">
-          Dominic & Danyael
-        </p>
+        {nombresInvitados ? <p className="text-sm tracking-widest uppercase text-gray-500">
+          Con mucho amor, de Dominic & Danyael
+        </p> : <p className="text-sm tracking-widest uppercase text-gray-500">
+          
+        </p>}
       </header>
 
       {/* ===== INVITACIÓN ===== */}
