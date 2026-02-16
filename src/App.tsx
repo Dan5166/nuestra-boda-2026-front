@@ -10,6 +10,7 @@ function App() {
       <Route path="/rsvp/:code" element={<RSVPPage />} />
       <Route path="/" element={<Home />} />
       <Route path="/invitation" element={<Invitation />} />
+      <Route path="/invitation/:code" element={<Invitation />} />
     </Routes>
   );
 }

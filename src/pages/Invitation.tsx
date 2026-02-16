@@ -1,7 +1,11 @@
-import { Link } from "react-router-dom";
-import InvitationImage from "../assets/invitacion.png";
+import { Link, useSearchParams } from "react-router-dom";
+import InvitationImage from "../assets/invitacion_compressed_page-0001.jpg";
 
 export default function Invitation() {
+  const [searchParams] = useSearchParams();
+  const code = searchParams.get("code");
+
+  console.log("Código de invitación:", code);
   return (
     <div className="min-h-screen bg-[#fdfaf6] text-[#5c4a2e]">
       {/* ===== HEADER SIMPLE ===== */}
@@ -32,7 +36,7 @@ export default function Invitation() {
         </p>
 
         <Link
-          to="/rsvp"
+          to={`/rsvp${code ? `?code=${code}` : ""}`} // Redirige a /rsvp o /rsvp/:code si el código existe
           className="
             inline-block
             px-12 py-4
