@@ -22,6 +22,7 @@ import V15 from "../assets/1-153.webp";
 
 import { Link } from "react-router-dom";
 import WeddingCountdown from "../components/WeddingCountdown";
+import BotonesRegaloYTransferencia from "../components/BotonesRegaloYTransferencia";
 
 const images = [
   V1,
@@ -89,7 +90,9 @@ export default function Home() {
       {/* ===== FRASE ===== */}
       <section className="py-24 bg-[#fdfaf6] text-center px-6">
         <p className="font-serif text-2xl md:text-3xl italic max-w-3xl mx-auto">
-          “Y nosotros hemos conocido y creído el amor que Dios tiene para con nosotros. Dios es amor; y el que permanece en amor, permanece en Dios, y Dios en él.”
+          “Y nosotros hemos conocido y creído el amor que Dios tiene para con
+          nosotros. Dios es amor; y el que permanece en amor, permanece en Dios,
+          y Dios en él.”
         </p>
         <p className="text-lg mt-6 opacity-90">1 Juan 4:16</p>
       </section>
@@ -181,6 +184,21 @@ export default function Home() {
         >
           Ir al RSVP
         </Link>
+      </section>
+      {/* ===== Sección de regalos ===== */}
+      <section className="py-28 px-6 bg-[#fdfaf6]">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="font-serif text-4xl mb-4">Regalos</h2>
+
+          <p className="text-sm mb-12 text-gray-600">
+            Tu presencia es el mejor regalo que podríamos recibir.
+            <br />
+            Si deseas bendecirnos de otra forma, aquí te dejamos algunas
+            opciones.
+          </p>
+
+          <BotonesRegaloYTransferencia />
+        </div>
       </section>
 
       {/* ===== FOOTER ===== */}
