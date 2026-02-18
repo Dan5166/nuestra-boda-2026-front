@@ -4,7 +4,7 @@ type WeddingMapProps = {
 
 export default function WeddingMap({ googleMapsUrl }: WeddingMapProps) {
   return (
-    <section className="py-28 px-6 bg-[#fdfaf6]">
+    <section className="py-28 px-6">
       <div className="max-w-4xl mx-auto text-center">
         <h2 className="font-serif text-4xl mb-6">
           ¿Cómo llegar?
