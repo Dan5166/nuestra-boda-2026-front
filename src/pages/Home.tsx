@@ -257,23 +257,7 @@ export default function Home() {
           MAPA PARA LLEGAR A LA BODA
       ========================= */}
       {mostrarMapa && (
-        <div className="py-28 px-6 bg-[#fdfaf6]">
-          <h2 className="font-serif text-4xl mb-6 text-center">
-            ¡Nos encantaría contar con tu presencia!
-          </h2>
-          <p className="text-sm mb-12 text-gray-600 text-center">
-            Aquí te dejamos un mapa para que puedas llegar sin problemas el día
-            de la boda.
-          </p>
-          <div className="max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-lg">
-            <WeddingMap googleMapsUrl="https://www.google.com/maps/place/Hacienda+Los+Naranjos" />
-          </div>
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
-              Si tienes alguna duda sobre cómo llegar, no dudes en contactarnos.
-            </p>
-          </div>
-        </div>
+        <WeddingMap googleMapsUrl="https://www.google.com/maps/place/Hacienda+Los+Naranjos" />
       )}
 
       {/* ===== FOOTER ===== */}
