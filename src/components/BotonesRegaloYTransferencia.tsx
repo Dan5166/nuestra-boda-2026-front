@@ -7,12 +7,20 @@ export default function BotonesRegaloYTransferencia() {
 
   const linkNoviosFalabella = `https://novios.falabella.com/info-evento/evento?codigoEvento=${codigoEvento}&ref=search`;
 
+  const datos = {
+    banco: "Falabella",
+    tipoCuenta: "Cuenta corriente",
+    numeroCuenta: "1-983-295382-0",
+    nombre: "Danyael Vásquez",
+    rut: "20.391.039-8",
+  };
+
   const datosTransferencia = `
-Banco: Falabella
-Tipo de cuenta: Cuenta corriente
-Número de cuenta: 1-983-295382-0
-Nombre: Danyael Vásquez
-RUT: 20.391.039-8
+Banco: ${datos.banco}
+Tipo de cuenta: ${datos.tipoCuenta}
+Número de cuenta: ${datos.numeroCuenta}
+Nombre: ${datos.nombre}
+RUT: ${datos.rut}
 `.trim();
 
   const copiarDatos = async () => {
@@ -65,7 +73,7 @@ RUT: 20.391.039-8
       </div>
 
       {/* ===== Card Transferencia ===== */}
-      <div className="rounded-2xl bg-white shadow-lg p-8 flex flex-col items-center text-center">
+      <div className="rounded-2xl bg-white shadow-lg p-8 flex flex-col text-center">
         <span className="text-4xl mb-4">💛</span>
 
         <h3 className="font-serif text-2xl mb-2">
@@ -75,6 +83,15 @@ RUT: 20.391.039-8
         <p className="text-sm text-gray-600 mb-6">
           Si prefieres, puedes apoyarnos mediante transferencia bancaria.
         </p>
+
+        {/* Datos visibles */}
+        <div className="text-sm text-gray-700 space-y-1 mb-6">
+          <p><span className="font-medium">Banco:</span> {datos.banco}</p>
+          <p><span className="font-medium">Tipo de cuenta:</span> {datos.tipoCuenta}</p>
+          <p><span className="font-medium">N° de cuenta:</span> {datos.numeroCuenta}</p>
+          <p><span className="font-medium">Nombre:</span> {datos.nombre}</p>
+          <p><span className="font-medium">RUT:</span> {datos.rut}</p>
+        </div>
 
         <button
           onClick={copiarDatos}

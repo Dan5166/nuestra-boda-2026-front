@@ -23,6 +23,9 @@ import V15 from "../assets/1-153.webp";
 import { Link } from "react-router-dom";
 import WeddingCountdown from "../components/WeddingCountdown";
 import BotonesRegaloYTransferencia from "../components/BotonesRegaloYTransferencia";
+import { useEffect, useState } from "react";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 const images = [
   V1,
@@ -43,12 +46,60 @@ const images = [
 ];
 
 export default function Home() {
+  const [mostrarMapa, setMostrarMapa] = useState(false);
+  const [loading, setLoading] = useState(false);
+  /* =========================
+     BUSCAR INVITADOS POR CODE
+  ========================= */
+
+  const buscarCodigo = async (codigo: string) => {
+    setLoading(true);
+
+    try {
+      if (!codigo) {
+        setLoading(false);
+        return;
+      }
+      const res = await fetch(`${API_URL}/users/by-code/${codigo}`);
+      if (!res.ok) throw new Error();
+
+      const data = await res.json();
+
+      const invitadosMap = data.usuarios.map((u: any) => ({
+        nombre: u.nombre,
+      }));
+
+      if (invitadosMap.length > 0) {
+        setMostrarMapa(true);
+      }
+    } catch {
+      console.error("Error al buscar código");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const codeFromUrl = new URLSearchParams(window.location.search).get("code");
+    if (codeFromUrl) {
+      buscarCodigo(codeFromUrl.toUpperCase());
+    }
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-lg text-gray-700">Cargando...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="relative min-h-screen text-[#5c4a2e]">
       {/* ===== HERO ===== */}
       <section
         className="
-    relative min-h-[100svh] md:min-h-screen
+    relative min-h-svh md:min-h-screen
     flex items-center justify-center
     bg-cover bg-center
   "
@@ -200,6 +251,37 @@ export default function Home() {
           <BotonesRegaloYTransferencia />
         </div>
       </section>
+
+      {/* =========================
+          MAPA PARA LLEGAR A LA BODA
+      ========================= */}
+      {mostrarMapa && (
+        <div className="py-28 px-6 bg-[#fdfaf6]">
+          <h2 className="font-serif text-4xl mb-6 text-center">
+            ¡Nos encantaría contar con tu presencia!
+          </h2>
+          <p className="text-sm mb-12 text-gray-600 text-center">
+            Aquí te dejamos un mapa para que puedas llegar sin problemas el día
+            de la boda.
+          </p>
+          <div className="max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-lg">
+            <iframe
+              title="Mapa de la boda"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.1234567890123!2d-99.12345678901234!3d19.12345678901234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d123456789012%3A0xabcdef1234567890!2sLugar%20de%20la%20Boda!5e0!3m2!1ses-419!2smx!4v1612345678901"
+              width="100%"
+              height="450"
+              style={{ border: 0 }}
+              allowFullScreen={false}
+              loading="lazy"
+            />
+          </div>
+          <div className="mt-6 text-center">
+            <p className="text-sm text-gray-600">
+              Si tienes alguna duda sobre cómo llegar, no dudes en contactarnos.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* ===== FOOTER ===== */}
       <footer className="py-10 text-center text-xs text-gray-500 bg-[#fdfaf6]">
