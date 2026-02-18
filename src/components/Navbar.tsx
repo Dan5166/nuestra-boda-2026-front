@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 interface NavbarProps {
   code: string | null;
@@ -10,6 +10,15 @@ export default function Navbar({ code }: NavbarProps) {
     return `${path}?code=${code}`;
   };
 
+  const baseClasses =
+    "transition font-medium";
+
+  const activeClasses =
+    "text-[#d4af37] border-b-2 border-[#d4af37] pb-1";
+
+  const inactiveClasses =
+    "text-gray-700 hover:text-[#d4af37]";
+
   return (
     <nav className="w-full bg-white/80 backdrop-blur shadow-sm sticky top-0 z-50">
       <div className="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
@@ -17,27 +26,40 @@ export default function Navbar({ code }: NavbarProps) {
           D & D
         </span>
 
-        <div className="flex gap-6 text-sm font-medium">
-          <Link
+        <div className="flex gap-6 text-sm">
+          <NavLink
             to={withCode("/")}
-            className="text-gray-700 hover:text-[#d4af37] transition"
+            end
+            className={({ isActive }) =>
+              `${baseClasses} ${
+                isActive ? activeClasses : inactiveClasses
+              }`
+            }
           >
             Inicio
-          </Link>
+          </NavLink>
 
-          <Link
+          <NavLink
             to={withCode("/invitation")}
-            className="text-gray-700 hover:text-[#d4af37] transition"
+            className={({ isActive }) =>
+              `${baseClasses} ${
+                isActive ? activeClasses : inactiveClasses
+              }`
+            }
           >
             Invitación
-          </Link>
+          </NavLink>
 
-          <Link
+          <NavLink
             to={withCode("/rsvp")}
-            className="text-gray-700 hover:text-[#d4af37] transition"
+            className={({ isActive }) =>
+              `${baseClasses} ${
+                isActive ? activeClasses : inactiveClasses
+              }`
+            }
           >
             RSVP
-          </Link>
+          </NavLink>
         </div>
       </div>
     </nav>
