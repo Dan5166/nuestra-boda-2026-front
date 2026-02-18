@@ -54,9 +54,11 @@ export default function Invitation() {
       setErrorMsg("El código ingresado no es válido.");
     } finally {
       if (invitados.length === 0) {
+        console.warn("Código no válido o sin invitados. Volviendo al paso de código.");
         setStep("codigo");
       }
       else {
+        console.log("Código válido. Mostrando invitación para:", invitados.map(i => i.nombre).join(", "));
         setStep("invitacion");
       }
       setLoading(false);
