@@ -42,13 +42,23 @@ export default function Invitation() {
       }));
 
       setInvitados(invitadosMap);
-      setStep("invitacion");
+      if (invitadosMap.length === 0) {
+        setErrorMsg("El código ingresado no tiene invitados asociados.");
+        setStep("codigo");
+        return;
+      }
 
       // 👉 Actualiza la URL sin recargar
       navigate(`/invitation?code=${codigo}`, { replace: true });
     } catch {
       setErrorMsg("El código ingresado no es válido.");
     } finally {
+      if (invitados.length === 0) {
+        setStep("codigo");
+      }
+      else {
+        setStep("invitacion");
+      }
       setLoading(false);
     }
   };
@@ -73,6 +83,14 @@ export default function Invitation() {
   /* =========================
      RENDER
   ========================= */
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-lg text-gray-600">Cargando...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#fdfaf6] text-[#5c4a2e] flex items-center justify-center px-4">
