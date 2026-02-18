@@ -25,6 +25,7 @@ import WeddingCountdown from "../components/WeddingCountdown";
 import BotonesRegaloYTransferencia from "../components/BotonesRegaloYTransferencia";
 import { useEffect, useState } from "react";
 import WeddingMap from "../components/WeddingMap";
+import Loader from "../components/Loader";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const LINK_GOOGLE_MAPS =
@@ -91,9 +92,7 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p className="text-lg text-gray-700">Cargando...</p>
-      </div>
+      <Loader/>
     );
   }
 

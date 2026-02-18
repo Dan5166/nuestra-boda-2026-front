@@ -2,6 +2,7 @@ import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import InvitationImage from "../assets/invitacion_compressed_page-0001.jpg";
 import BotonesRegaloYTransferencia from "../components/BotonesRegaloYTransferencia";
+import Loader from "../components/Loader";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -90,9 +91,7 @@ export default function Invitation() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-lg text-gray-600">Cargando...</p>
-      </div>
+      <Loader/>
     );
   }
 
