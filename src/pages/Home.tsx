@@ -266,13 +266,13 @@ export default function Home() {
           </p>
           <div className="max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-lg">
             <iframe
-              title="Mapa de la boda"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.1234567890123!2d-99.12345678901234!3d19.12345678901234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d123456789012%3A0xabcdef1234567890!2sLugar%20de%20la%20Boda!5e0!3m2!1ses-419!2smx!4v1612345678901"
-              width="100%"
-              height="450"
+              title="Mapa Hacienda Los Naranjos"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1660.1722581607085!2d-70.72958200160521!3d-33.67414239999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x966320a82211b543%3A0xd22ecaa048bc51a8!2sHacienda%20Los%20Naranjos!5e0!3m2!1ses-419!2scl!4v1771442132745!5m2!1ses-419!2scl"
+              className="w-full h-112.5"
               style={{ border: 0 }}
-              allowFullScreen={false}
+              allowFullScreen
               loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
             />
           </div>
           <div className="mt-6 text-center">
