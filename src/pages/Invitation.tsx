@@ -43,9 +43,18 @@ export default function Invitation() {
 
       setInvitados(invitadosMap);
       if (invitadosMap.length === 0) {
+        console.warn(
+          "Código no válido o sin invitados. Volviendo al paso de código.",
+        );
         setErrorMsg("El código ingresado no tiene invitados asociados.");
         setStep("codigo");
         return;
+      } else {
+        console.log(
+          "Código válido. Invitados encontrados:",
+          invitadosMap.map((i: any) => i.nombre).join(", "),
+        );
+        setStep("invitacion");
       }
 
       // 👉 Actualiza la URL sin recargar
@@ -53,14 +62,6 @@ export default function Invitation() {
     } catch {
       setErrorMsg("El código ingresado no es válido.");
     } finally {
-      if (invitados.length === 0) {
-        console.warn("Código no válido o sin invitados. Volviendo al paso de código.");
-        setStep("codigo");
-      }
-      else {
-        console.log("Código válido. Mostrando invitación para:", invitados.map(i => i.nombre).join(", "));
-        setStep("invitacion");
-      }
       setLoading(false);
     }
   };
