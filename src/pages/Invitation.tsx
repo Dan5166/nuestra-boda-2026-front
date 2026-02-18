@@ -28,43 +28,44 @@ export default function Invitation() {
   ========================= */
 
   const buscarCodigo = async (codigo: string) => {
-    setLoading(true);
-    setErrorMsg("");
+  if (!codigo) return;
 
-    try {
-      const res = await fetch(`${API_URL}/users/by-code/${codigo}`);
-      if (!res.ok) throw new Error();
+  setLoading(true);
+  setErrorMsg("");
 
-      const data = await res.json();
+  try {
+    const res = await fetch(`${API_URL}/users/by-code/${codigo}`);
+    if (!res.ok) throw new Error("Código inválido");
 
-      const invitadosMap = data.usuarios.map((u: any) => ({
-        nombre: u.nombre,
-      }));
+    const data = await res.json();
 
-      setInvitados(invitadosMap);
-      if (invitadosMap.length === 0) {
-        console.warn(
-          "Código no válido o sin invitados. Volviendo al paso de código.",
-        );
-        setErrorMsg("El código ingresado no tiene invitados asociados.");
-        setStep("codigo");
-        return;
-      } else {
-        console.log(
-          "Código válido. Invitados encontrados:",
-          invitadosMap.map((i: any) => i.nombre).join(", "),
-        );
-        setStep("invitacion");
-      }
+    const invitadosMap = data.usuarios.map((u: any) => ({
+      nombre: u.nombre,
+    }));
 
-      // 👉 Actualiza la URL sin recargar
-      navigate(`/invitation?code=${codigo}`, { replace: true });
-    } catch {
-      setErrorMsg("El código ingresado no es válido.");
-    } finally {
-      setLoading(false);
+    if (invitadosMap.length === 0) {
+      setErrorMsg("El código ingresado no tiene invitados asociados.");
+      setInvitados([]);
+      setStep("codigo");
+      return;
     }
-  };
+
+    // ✅ Código válido
+    setInvitados(invitadosMap);
+    setStep("invitacion");
+
+    // ✅ Actualiza la URL sin recargar
+    navigate(`/invitation?code=${codigo}`, { replace: true });
+  } catch (error) {
+    console.error(error);
+    setErrorMsg("El código ingresado no es válido.");
+    setInvitados([]);
+    setStep("codigo");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   /* =========================
      AUTO BUSCAR SI VIENE EN URL
