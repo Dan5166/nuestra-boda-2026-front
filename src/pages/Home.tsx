@@ -24,6 +24,7 @@ import { Link } from "react-router-dom";
 import WeddingCountdown from "../components/WeddingCountdown";
 import BotonesRegaloYTransferencia from "../components/BotonesRegaloYTransferencia";
 import { useEffect, useState } from "react";
+import WeddingMap from "../components/WeddingMap";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -265,15 +266,7 @@ export default function Home() {
             de la boda.
           </p>
           <div className="max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-lg">
-            <iframe
-              title="Mapa Hacienda Los Naranjos"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1660.1722581607085!2d-70.72958200160521!3d-33.67414239999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x966320a82211b543%3A0xd22ecaa048bc51a8!2sHacienda%20Los%20Naranjos!5e0!3m2!1ses-419!2scl!4v1771442132745!5m2!1ses-419!2scl"
-              className="w-full h-112.5"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+            <WeddingMap googleMapsUrl="https://www.google.com/maps/place/Hacienda+Los+Naranjos" />
           </div>
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
