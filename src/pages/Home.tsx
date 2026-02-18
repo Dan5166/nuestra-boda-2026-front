@@ -27,6 +27,8 @@ import { useEffect, useState } from "react";
 import WeddingMap from "../components/WeddingMap";
 
 const API_URL = import.meta.env.VITE_API_URL;
+const LINK_GOOGLE_MAPS =
+  "https://www.google.com/maps/place/Hacienda+Los+Naranjos/@-33.6741379,-70.7297751,17z/data=!3m1!4b1!4m6!3m5!1s0x966320a82211b543:0xd22ecaa048bc51a8!8m2!3d-33.6741424!4d-70.7272002!16s%2Fg%2F11bwm7x0gb?entry=ttu&g_ep=EgoyMDI2MDIxNi4wIKXMDSoASAFQAw%3D%3D";
 
 const images = [
   V1,
@@ -256,9 +258,7 @@ export default function Home() {
       {/* =========================
           MAPA PARA LLEGAR A LA BODA
       ========================= */}
-      {mostrarMapa && (
-        <WeddingMap googleMapsUrl="https://www.google.com/maps/place/Hacienda+Los+Naranjos" />
-      )}
+      {mostrarMapa && <WeddingMap googleMapsUrl={LINK_GOOGLE_MAPS} />}
 
       {/* ===== FOOTER ===== */}
       <footer className="py-10 text-center text-xs text-gray-500 bg-[#fdfaf6]">
