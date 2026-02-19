@@ -104,7 +104,7 @@ export default function Invitation() {
             if (index % 2 === 0) grupos.push(arr.slice(index, index + 2));
             return grupos;
           }, [])
-          .map((grupo: Invitado[], index, arr) => (
+          .map((grupo: Invitado[], index) => (
             <div key={index} className="font-serif text-2xl md:text-3xl">
               {grupo.map((invitado: Invitado, idx) => (
                 <span key={idx}>
