@@ -79,24 +79,55 @@ export default function Invitation() {
      TEXTO DINÁMICO
   ========================= */
 
+  type Invitado = {
+    nombre: string;
+  };
+
   const nombresInvitados =
-    invitados.length > 0 ? (
-      <div className="flex flex-col items-center text-center">
-        {invitados.map((i, index) => (
-          <span key={index} className="font-serif text-3xl md:text-4xl">
-            {i.nombre}
-            {index < invitados.length - 1 && (
-              <span className="block my-2 text-[#8a6d3b] text-xl md:text-2xl font-serif">
-                &
-              </span>
-            )}
-          </span>
-        ))}
-      </div>
-    ) : (
+    invitados.length === 0 ? (
       <span className="font-serif text-3xl md:text-4xl">
         Te queremos en nuestra boda
       </span>
+    ) : invitados.length === 1 ? (
+      <span className="font-serif text-3xl md:text-4xl">
+        {invitados[0].nombre}
+      </span>
+    ) : invitados.length === 2 ? (
+      <div className="flex flex-col items-center text-center">
+        <span className="font-serif text-3xl md:text-4xl">
+          {invitados[0].nombre}
+        </span>
+        <span className="my-2 text-[#8a6d3b] text-xl md:text-2xl font-serif">
+          &
+        </span>
+        <span className="font-serif text-3xl md:text-4xl">
+          {invitados[1].nombre}
+        </span>
+      </div>
+    ) : (
+      <div className="flex flex-col items-center text-center">
+        {invitados
+          .reduce<Invitado[][]>((grupos, _, index, arr) => {
+            if (index % 2 === 0) grupos.push(arr.slice(index, index + 2));
+            return grupos;
+          }, [])
+          .map((grupo: Invitado[], index, arr) => (
+            <div key={index} className="font-serif text-2xl md:text-3xl">
+              {grupo.map((invitado: Invitado, idx) => (
+                <span key={idx}>
+                  {invitado.nombre}
+                  {idx === 0 && grupo.length === 2 && " - "}
+                </span>
+              ))}
+
+              {index < arr.length - 1 && (
+                <span className="block my-2 text-[#8a6d3b] text-xl font-serif">
+                  &
+                </span>
+              )}
+            </div>
+          ))}
+      </div>
     );
 
   /* =========================
