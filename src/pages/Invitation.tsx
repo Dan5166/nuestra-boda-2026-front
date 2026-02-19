@@ -82,7 +82,7 @@ export default function Invitation() {
 
   const nombresInvitados =
     invitados.length > 0
-      ? invitados.map((i) => i.nombre).join(" & ")
+      ? invitados.map((i) => i.nombre).join("<span class='mx-1 text-[#8a6d3b] font-serif'>&</span><br/>")
       : "Te queremos en nuestra boda";
 
   /* =========================
