@@ -93,9 +93,6 @@ export default function Invitation() {
         <span className="font-serif text-3xl md:text-4xl">
           {invitados[0].nombre}
         </span>
-        <span className="my-2 text-[#8a6d3b] text-xl md:text-2xl font-serif">
-          &
-        </span>
         <span className="font-serif text-3xl md:text-4xl">
           {invitados[1].nombre}
         </span>
