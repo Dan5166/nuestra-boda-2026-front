@@ -79,10 +79,6 @@ export default function Invitation() {
      TEXTO DINÁMICO
   ========================= */
 
-  type Invitado = {
-    nombre: string;
-  };
-
   const nombresInvitados =
     invitados.length === 0 ? (
       <span className="font-serif text-3xl md:text-4xl">
