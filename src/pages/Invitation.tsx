@@ -80,19 +80,24 @@ export default function Invitation() {
   ========================= */
 
   const nombresInvitados =
-    invitados.length > 0
-      ? invitados.map((i, index) => (
-          <span key={index}>
+    invitados.length > 0 ? (
+      <div className="flex flex-col items-center text-center">
+        {invitados.map((i, index) => (
+          <span key={index} className="font-serif text-3xl md:text-4xl">
             {i.nombre}
             {index < invitados.length - 1 && (
-              <>
-                <span className="mx-1 text-[#8a6d3b] font-serif">&</span>
-                <br />
-              </>
+              <span className="block my-2 text-[#8a6d3b] text-xl md:text-2xl font-serif">
+                &
+              </span>
             )}
           </span>
-        ))
-      : "Te queremos en nuestra boda";
+        ))}
+      </div>
+    ) : (
+      <span className="font-serif text-3xl md:text-4xl">
+        Te queremos en nuestra boda
+      </span>
+    );
 
   /* =========================
      RENDER
