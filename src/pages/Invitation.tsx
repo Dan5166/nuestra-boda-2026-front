@@ -112,12 +112,6 @@ export default function Invitation() {
                   {idx === 0 && grupo.length === 2 && " - "}
                 </span>
               ))}
-
-              {index < arr.length - 1 && (
-                <span className="block my-2 text-[#8a6d3b] text-xl font-serif">
-                  &
-                </span>
-              )}
             </div>
           ))}
       </div>
