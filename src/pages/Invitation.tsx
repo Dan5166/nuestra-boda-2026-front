@@ -29,44 +29,43 @@ export default function Invitation() {
   ========================= */
 
   const buscarCodigo = async (codigo: string) => {
-  if (!codigo) return;
+    if (!codigo) return;
 
-  setLoading(true);
-  setErrorMsg("");
+    setLoading(true);
+    setErrorMsg("");
 
-  try {
-    const res = await fetch(`${API_URL}/users/by-code/${codigo}`);
-    if (!res.ok) throw new Error("Código inválido");
+    try {
+      const res = await fetch(`${API_URL}/users/by-code/${codigo}`);
+      if (!res.ok) throw new Error("Código inválido");
 
-    const data = await res.json();
+      const data = await res.json();
 
-    const invitadosMap = data.usuarios.map((u: any) => ({
-      nombre: u.nombre,
-    }));
+      const invitadosMap = data.usuarios.map((u: any) => ({
+        nombre: u.nombre,
+      }));
 
-    if (invitadosMap.length === 0) {
-      setErrorMsg("El código ingresado no tiene invitados asociados.");
+      if (invitadosMap.length === 0) {
+        setErrorMsg("El código ingresado no tiene invitados asociados.");
+        setInvitados([]);
+        setStep("codigo");
+        return;
+      }
+
+      // ✅ Código válido
+      setInvitados(invitadosMap);
+      setStep("invitacion");
+
+      // ✅ Actualiza la URL sin recargar
+      navigate(`/invitation?code=${codigo}`, { replace: true });
+    } catch (error) {
+      console.error(error);
+      setErrorMsg("El código ingresado no es válido.");
       setInvitados([]);
       setStep("codigo");
-      return;
+    } finally {
+      setLoading(false);
     }
-
-    // ✅ Código válido
-    setInvitados(invitadosMap);
-    setStep("invitacion");
-
-    // ✅ Actualiza la URL sin recargar
-    navigate(`/invitation?code=${codigo}`, { replace: true });
-  } catch (error) {
-    console.error(error);
-    setErrorMsg("El código ingresado no es válido.");
-    setInvitados([]);
-    setStep("codigo");
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   /* =========================
      AUTO BUSCAR SI VIENE EN URL
@@ -82,7 +81,17 @@ export default function Invitation() {
 
   const nombresInvitados =
     invitados.length > 0
-      ? invitados.map((i) => i.nombre).join("<span class='mx-1 text-[#8a6d3b] font-serif'>&</span><br/>")
+      ? invitados.map((i, index) => (
+          <span key={index}>
+            {i.nombre}
+            {index < invitados.length - 1 && (
+              <>
+                <span className="mx-1 text-[#8a6d3b] font-serif">&</span>
+                <br />
+              </>
+            )}
+          </span>
+        ))
       : "Te queremos en nuestra boda";
 
   /* =========================
@@ -90,9 +99,7 @@ export default function Invitation() {
   ========================= */
 
   if (loading) {
-    return (
-      <Loader/>
-    );
+    return <Loader />;
   }
 
   return (
