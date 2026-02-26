@@ -60,9 +60,6 @@ export default function RSVPPage() {
     msg: "",
   });
   const [showThanksModal, setShowThanksModal] = useState(false);
-  const [estadoModal, setEstadoModal] = useState<
-    "confirmado" | "rechazado" | null
-  >(null);
   const navigate = useNavigate();
 
   /* =========================
@@ -161,10 +158,7 @@ export default function RSVPPage() {
         msg: "¡Gracias! Tu respuesta fue registrada correctamente 💛",
       });
 
-      // 👉 Redirige al home luego de 2.5 segundos
-      setTimeout(() => {
-        navigate(`/${codeFromUrl ? `?code=${codeFromUrl}` : ""}`);
-      }, 2500);
+      setShowThanksModal(true);
     } catch {
       setStatusMsg({
         type: "error",
@@ -266,19 +260,13 @@ export default function RSVPPage() {
               <select
                 className="w-full border p-2"
                 value={invitado.estado}
-                onChange={(e) => {
-                  const nuevoEstado = e.target.value as EstadoUsuario;
-
-                  updateInvitado(activeIndex, "estado", nuevoEstado);
-
-                  if (
-                    nuevoEstado === EstadoUsuario.CONFIRMADO ||
-                    nuevoEstado === EstadoUsuario.RECHAZADO
-                  ) {
-                    setEstadoModal(nuevoEstado);
-                    setShowThanksModal(true);
-                  }
-                }}
+                onChange={(e) =>
+                  updateInvitado(
+                    activeIndex,
+                    "estado",
+                    e.target.value as EstadoUsuario,
+                  )
+                }
               >
                 <option value="">¿Asistirás?</option>
                 <option value="confirmado">Confirmo asistencia</option>
@@ -361,10 +349,9 @@ export default function RSVPPage() {
       </div>
       <ConfirmModal
         open={showThanksModal}
-        estado={estadoModal}
         onClose={() => {
           setShowThanksModal(false);
-          setEstadoModal(null);
+          navigate(`/${codeFromUrl ? `?code=${codeFromUrl}` : ""}`);
         }}
       />
     </div>
