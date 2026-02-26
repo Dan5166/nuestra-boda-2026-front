@@ -153,11 +153,6 @@ export default function RSVPPage() {
         if (!res.ok) throw new Error("Error guardando RSVP");
       }
 
-      setStatusMsg({
-        type: "success",
-        msg: "¡Gracias! Tu respuesta fue registrada correctamente 💛",
-      });
-
       setShowThanksModal(true);
     } catch {
       setStatusMsg({
