@@ -333,12 +333,6 @@ export default function RSVPPage() {
             }`}
           >
             <p className="font-semibold">{statusMsg.msg}</p>
-
-            {statusMsg.type === "success" && (
-              <p className="mt-2 text-sm text-green-600">
-                Serás redirigido automáticamente al inicio…
-              </p>
-            )}
           </div>
         )}
       </div>

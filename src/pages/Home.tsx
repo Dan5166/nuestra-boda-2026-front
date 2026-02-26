@@ -20,7 +20,7 @@ import V13 from "../assets/1-133.webp";
 import V14 from "../assets/1-145.webp";
 import V15 from "../assets/1-153.webp";
 
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import WeddingCountdown from "../components/WeddingCountdown";
 import BotonesRegaloYTransferencia from "../components/BotonesRegaloYTransferencia";
 import { useEffect, useState } from "react";
@@ -52,6 +52,9 @@ const images = [
 export default function Home() {
   const [mostrarMapa, setMostrarMapa] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const [searchParams] = useSearchParams();
+  const codeFromUrl = searchParams.get("code")?.toUpperCase() || "";
   /* =========================
      BUSCAR INVITADOS POR CODE
   ========================= */
@@ -132,7 +135,7 @@ export default function Home() {
           <WeddingCountdown />
 
           <Link
-            to="/rsvp"
+            to={`/rsvp${codeFromUrl ? `?code=${codeFromUrl}` : ""}`}
             className="inline-block px-10 py-4 bg-linear-to-r from-[#bf953f] via-[#d4af37] to-[#aa771c] text-white font-bold uppercase tracking-[0.25em] text-xs rounded-full shadow-xl"
           >
             Confirmar asistencia
@@ -232,7 +235,7 @@ export default function Home() {
         </p>
 
         <Link
-          to="/rsvp"
+          to={`/rsvp${codeFromUrl ? `?code=${codeFromUrl}` : ""}`}
           className="inline-block px-12 py-4 bg-white text-[#8a6d3b] font-bold uppercase tracking-[0.25em] text-xs rounded-full shadow-xl hover:bg-[#fdf3d7] transition"
         >
           Ir al RSVP
