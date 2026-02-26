@@ -4,6 +4,7 @@ import FondoDesktop from "../assets/fondo-desktop.webp";
 import FondoMovil from "../assets/fondo-movil.webp";
 import Loader from "../components/Loader";
 import { useNavigate } from "react-router-dom";
+import ConfirmModal from "../components/ConfirmModal";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -44,6 +45,10 @@ interface Invitado {
 
 export default function RSVPPage() {
   const [searchParams] = useSearchParams();
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [accionModal, setAccionModal] = useState<
+    "confirmar" | "rechazar" | null
+  >(null);
   const codeFromUrl = searchParams.get("code")?.toUpperCase() || "";
 
   const [step, setStep] = useState<"codigo" | "formulario">(
@@ -188,38 +193,36 @@ export default function RSVPPage() {
         style={{ backgroundImage: `url(${FondoMovil})` }}
       />
 
-
       <div className="relative z-10 w-full max-w-xl bg-white/95 p-6 border-8 [border-image:linear-gradient(to_right,#bf953f,#fcf6ba,#b38728)1]">
-
         {step === "codigo" && (
           <div className="relative z-10 w-full max-w-xl bg-white/95">
-              <h2 className="text-xl font-bold mb-4">Ingresa tu código</h2>
-              <input
-                placeholder="Código"
-                className="w-full border p-2 mb-4"
-                value={codigoInput}
-                onChange={(e) => setCodigoInput(e.target.value.toUpperCase())}
-              />
-              <button
-                onClick={() => buscarCodigo(codigoInput)}
-                disabled={!codigoInput || loading}
-                className="w-full py-3 bg-[#8a6d3b] text-white font-bold disabled:opacity-50"
-              >
-                {loading ? "Buscando..." : "Continuar"}
-              </button>
+            <h2 className="text-xl font-bold mb-4">Ingresa tu código</h2>
+            <input
+              placeholder="Código"
+              className="w-full border p-2 mb-4"
+              value={codigoInput}
+              onChange={(e) => setCodigoInput(e.target.value.toUpperCase())}
+            />
+            <button
+              onClick={() => buscarCodigo(codigoInput)}
+              disabled={!codigoInput || loading}
+              className="w-full py-3 bg-[#8a6d3b] text-white font-bold disabled:opacity-50"
+            >
+              {loading ? "Buscando..." : "Continuar"}
+            </button>
 
-              {statusMsg.msg && (
-                <div
-                  className={`mt-4 rounded-lg border p-4 text-center ${
-                    statusMsg.type === "error"
-                      ? "border-red-300 bg-red-50 text-red-700"
-                      : "border-green-300 bg-green-50 text-green-700"
-                  }`}
-                >
-                  {statusMsg.msg}
-                </div>
-              )}
-            </div>
+            {statusMsg.msg && (
+              <div
+                className={`mt-4 rounded-lg border p-4 text-center ${
+                  statusMsg.type === "error"
+                    ? "border-red-300 bg-red-50 text-red-700"
+                    : "border-green-300 bg-green-50 text-green-700"
+                }`}
+              >
+                {statusMsg.msg}
+              </div>
+            )}
+          </div>
         )}
         {step === "formulario" && invitado && (
           <>
@@ -263,13 +266,23 @@ export default function RSVPPage() {
               <select
                 className="w-full border p-2"
                 value={invitado.estado}
-                onChange={(e) =>
-                  updateInvitado(
-                    activeIndex,
-                    "estado",
-                    e.target.value as EstadoUsuario,
-                  )
-                }
+                onChange={(e) => {
+                  const nuevoEstado = e.target.value as EstadoUsuario;
+
+                  updateInvitado(activeIndex, "estado", nuevoEstado);
+
+                  if (
+                    nuevoEstado === EstadoUsuario.CONFIRMADO ||
+                    nuevoEstado === EstadoUsuario.RECHAZADO
+                  ) {
+                    setAccionModal(
+                      nuevoEstado === EstadoUsuario.CONFIRMADO
+                        ? "confirmar"
+                        : "rechazar",
+                    );
+                    setShowConfirmModal(true);
+                  }
+                }}
               >
                 <option value="">¿Asistirás?</option>
                 <option value="confirmado">Confirmo asistencia</option>
@@ -350,6 +363,30 @@ export default function RSVPPage() {
           </div>
         )}
       </div>
+      <ConfirmModal
+        open={showConfirmModal}
+        title={
+          accionModal === "confirmar"
+            ? "¿Confirmas tu asistencia?"
+            : "¿Confirmas que no podrás asistir?"
+        }
+        description={
+          accionModal === "confirmar"
+            ? "Nos alegra mucho contar contigo. ¿Deseas confirmar esta respuesta?"
+            : "Lamentamos que no puedas asistir. ¿Confirmas esta decisión?"
+        }
+        confirmText="Sí, confirmar"
+        cancelText="Volver"
+        loading={loading}
+        onCancel={() => {
+          setShowConfirmModal(false);
+          // Revierte a pendiente si cancela
+          updateInvitado(activeIndex, "estado", EstadoUsuario.PENDIENTE);
+        }}
+        onConfirm={() => {
+          setShowConfirmModal(false);
+        }}
+      />
     </div>
   );
 }
