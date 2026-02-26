@@ -158,7 +158,7 @@ export default function RSVPPage() {
 
       // 👉 Redirige al home luego de 2.5 segundos
       setTimeout(() => {
-        navigate("/");
+        navigate(`/${codeFromUrl ? `?code=${codeFromUrl}` : ""}`);
       }, 2500);
     } catch {
       setStatusMsg({
