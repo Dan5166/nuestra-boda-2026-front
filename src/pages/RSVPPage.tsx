@@ -45,10 +45,6 @@ interface Invitado {
 
 export default function RSVPPage() {
   const [searchParams] = useSearchParams();
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [accionModal, setAccionModal] = useState<
-    "confirmar" | "rechazar" | null
-  >(null);
   const codeFromUrl = searchParams.get("code")?.toUpperCase() || "";
 
   const [step, setStep] = useState<"codigo" | "formulario">(
@@ -63,6 +59,10 @@ export default function RSVPPage() {
     type: "",
     msg: "",
   });
+  const [showThanksModal, setShowThanksModal] = useState(false);
+  const [estadoModal, setEstadoModal] = useState<
+    "confirmado" | "rechazado" | null
+  >(null);
   const navigate = useNavigate();
 
   /* =========================
@@ -275,12 +275,8 @@ export default function RSVPPage() {
                     nuevoEstado === EstadoUsuario.CONFIRMADO ||
                     nuevoEstado === EstadoUsuario.RECHAZADO
                   ) {
-                    setAccionModal(
-                      nuevoEstado === EstadoUsuario.CONFIRMADO
-                        ? "confirmar"
-                        : "rechazar",
-                    );
-                    setShowConfirmModal(true);
+                    setEstadoModal(nuevoEstado);
+                    setShowThanksModal(true);
                   }
                 }}
               >
@@ -364,27 +360,11 @@ export default function RSVPPage() {
         )}
       </div>
       <ConfirmModal
-        open={showConfirmModal}
-        title={
-          accionModal === "confirmar"
-            ? "¿Confirmas tu asistencia?"
-            : "¿Confirmas que no podrás asistir?"
-        }
-        description={
-          accionModal === "confirmar"
-            ? "Nos alegra mucho contar contigo. ¿Deseas confirmar esta respuesta?"
-            : "Lamentamos que no puedas asistir. ¿Confirmas esta decisión?"
-        }
-        confirmText="Sí, confirmar"
-        cancelText="Volver"
-        loading={loading}
-        onCancel={() => {
-          setShowConfirmModal(false);
-          // Revierte a pendiente si cancela
-          updateInvitado(activeIndex, "estado", EstadoUsuario.PENDIENTE);
-        }}
-        onConfirm={() => {
-          setShowConfirmModal(false);
+        open={showThanksModal}
+        estado={estadoModal}
+        onClose={() => {
+          setShowThanksModal(false);
+          setEstadoModal(null);
         }}
       />
     </div>
