@@ -260,7 +260,7 @@ export default function Home() {
       {/* =========================
           MAPA PARA LLEGAR A LA BODA
       ========================= */}
-      {mostrarMapa && <WeddingMap googleMapsUrl={LINK_GOOGLE_MAPS} />}
+      <WeddingMap googleMapsUrl={LINK_GOOGLE_MAPS} />
 
       {/* ===== FOOTER ===== */}
       <footer className="py-10 text-center text-xs text-gray-500 bg-[#fdfaf6]">
